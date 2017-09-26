@@ -1,39 +1,35 @@
 "use strict";
-
 const API_KEY = "AIzaSyB6RQPxv-X6aojxx9IKh0Nc4twyqlMnitI"; //api de youtube
-
 class app {
       constructor() { //variables globales
             this.videos = [],
-            this.selectedVideo = null,
-            this.searchTerm = "iPhone X"
+                  this.selectedVideo = null,
+                  this.searchTerm = "super junior"
       }
 
       init() {
-            //this.videoSearch("iPhone");
-            this.youtubeSearch("super junior");// manda a la funcion yotube cancion q debe buscar
+            //this.videoSearch("super junior");
+            this.youtubeSearch("super junior");
       }
-      //<iframe className="embed-responsive-item" src={url}> </iframe>
-      getVideoList(videos) { // funcion lista de video
+      getImageList(videos) {
             return videos.map((video, index) => {
+                  const url = `https://www.youtube.com/embed/${video.id.videoId}`;
+                  const title = video.snippet.title;
+                  const description = video.snippet.description;
                   const imageUrl = video.snippet.thumbnails.default.url;
-                  $("#imgvideos").append(`<li> <img class="media-object" src=${imageUrl} /></li>`);
+                  return `<li> <img class="media-object" src=${imageUrl} />
+                               <div class="datos"><p>${title}</p><p>${description}</p></div></li>`;
             });
       }
-      getVideo(videos) { // funcion lista de video
-            for(let i=0;i<videos.length;i++){
-                  var a = videos.id.videosId[i];
-                  
-            }
-            const url = `https://www.youtube.com/embed/${a}`;
-            return `<div> <iframe class="embed-responsive-item" src=${url}> </iframe></div>`
+      getVideoList(video) {
 
-      //      return videos.map((video, index) => {
-      //             // const imageUrl = video.snippet.thumbnails.default.url;
-      //             const url = `https://www.youtube.com/embed/${video.id.videoId}`;
-      //             return `<div> <iframe class="embed-responsive-item" src=${url}> </iframe></div>`
-      //             // $("#imgvideos").append(`<li> <img class="media-object" src=${imageUrl} /></li>`);
-      //      });
+            const url = `https://www.youtube.com/embed/${video.id.videoId}`;
+            const title = video.snippet.title;
+            const description = video.snippet.description;
+            $("#descripcion").append(`<h2>${title}</h2>
+            <p>${description}</p></div>`);
+            return `<iframe class="embed-responsive-item" src=${url}> </iframe>`;
+
       }
       youtubeSearch(searchTerm) { // recibe
             console.log(searchTerm);
@@ -46,14 +42,15 @@ class app {
                         searchTerm: searchTerm
                   };
                   console.log(app.result.videos);
-                  console.log("este si ",app.result.selectedVideo);
+                  console.log("este si ", app.result.selectedVideo);
                   console.log(app.result.searchTerm);
-                  let list = this.getVideoList(app.result.videos);
-                  let oneVideo = this.getVideo(app.result.selectedVideo); // manda a la funcion videolista el video encontrado
-                  $("#videos").append(oneVideo);//imprime en lista la canciones
+                  let video = this.getVideoList(app.result.selectedVideo);
+                  $("#videos").append(video);
+                  let imgVideo = this.getImageList(app.result.videos); 
+                  $("#imgvideos").append(imgVideo);
             });
       }
-      videoSearch (searchTerm) {
+      videoSearch(searchTerm) {
             jQuery.getJSON("list.json", data => {
                   console.log("result", data.items);
                   app.result = {
@@ -61,13 +58,12 @@ class app {
                         selectedVideo: data.items[0],
                         searchTerm: searchTerm
                   };
-                  let list = this.getVideoList(app.result.videos);
-                  let oneVideo = this.getVideo(app.result.selectedVideo); // manda a la funcion videolista el video encontrado
-                  $("#videos").append(oneVideo);
-                  //$("#root").append(list);
+                  let video = this.getVideoList(app.result.selectedVideo);
+                  let imgVideo = this.getImageList(app.result.videos); 
+                  $("#videos").append(video);
+                  $("#imgvideos").append(imgVideo);
             });
       }
 };
-
 let aplicar = new app();
 aplicar.init();

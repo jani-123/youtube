@@ -233,3 +233,20 @@ body {
     width: 100%;
     height: 400px;
   }
+  .caja{
+    margin-top: 300px;
+  }
+  .datos{
+    color: #464141;
+    display: inline-block;
+    margin-left: 140px;
+    overflow: auto;
+    margin-top: -100px;
+  }
+  .imagenes{
+    margin-top: -530px;
+  }
+  .descripcion{
+    color: #464141;
+    margin-top: -30px;
+  }
