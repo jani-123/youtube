@@ -8,8 +8,8 @@ class app {
       }
 
       init() {
-            this.videoSearch("super junior");
-            //this.youtubeSearch("super junior");
+            //this.videoSearch("super junior");
+            this.youtubeSearch("super junior");
             this.busqueda();
       }
       getImageList(videos) {
@@ -18,9 +18,8 @@ class app {
                   const title = video.snippet.title;
                   const description = video.snippet.description;
                   const imageUrl = video.snippet.thumbnails.default.url;
-                  //$("img").click(() => this.youtubeSearch(title));
                   return `<li> <img class="media-object" src=${imageUrl} />
-                               <div class="datos"><p>${title}</p><p>${description}</p></div></li>`
+                               <div class="datos"><p>${title}</p><p>${description}</p></div></li>`;
                   
             });
       }
